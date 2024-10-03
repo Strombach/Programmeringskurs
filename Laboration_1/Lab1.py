@@ -30,11 +30,14 @@ def Print_Main_Menu():
                userInput = True
 
 def Scan_all(ips_to_scan):
-     print(ips_to_scan)
-     # scanner.scan(hosts=str(ips_to_scan), arguments='-n -sP -PE -PA21,23,80,3389')
-     # hosts_list = [(x, scanner[x]['status']['state']) for x in scanner.all_hosts()]
-     # for host, status in hosts_list:
-     #      print(host, status)
+     for ip in ips_to_scan:
+          ip_str = str(ip)
+          print(f"Scanning {ip_str}")
+          scanner.scan(hosts=ip_str, arguments='-n -sP -PE -PA21,23,80,3389')
+          hosts_list = [(x, scanner[x]['status']['state']) for x in scanner.all_hosts()]
+          for host, status in hosts_list:
+               print(host, status)
+
 
 def Print_Scan_Menu():
      os.system("clear")
@@ -54,7 +57,7 @@ def Print_Scan_Menu():
                          new_ip = ipaddress.ip_address(ip)
                          ip_list.append(new_ip)
                except ValueError as e:
-                    print(f"{e} and won't be added")
+                    print(f"{e} and won't be added to the list")
 
           if len(ip_list) > 0:
                userInput = True
