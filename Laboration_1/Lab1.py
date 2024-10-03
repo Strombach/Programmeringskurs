@@ -31,20 +31,33 @@ def Print_Main_Menu():
 
 def Scan_all(ips_to_scan):
      print(ips_to_scan)
-     scanner.scan(hosts=str(ips_to_scan), arguments='-n -sP -PE -PA21,23,80,3389')
-     hosts_list = [(x, scanner[x]['status']['state']) for x in scanner.all_hosts()]
-     for host, status in hosts_list:
-          print(host, status)
+     # scanner.scan(hosts=str(ips_to_scan), arguments='-n -sP -PE -PA21,23,80,3389')
+     # hosts_list = [(x, scanner[x]['status']['state']) for x in scanner.all_hosts()]
+     # for host, status in hosts_list:
+     #      print(host, status)
 
 def Print_Scan_Menu():
      os.system("clear")
      userInput = False
      while not userInput:
-          try:
-               ips=input("Enter the ips to scan with space between every ip:\n")
+          ip_input = input("Enter the IP:s to scan with space between every IP OR one IP range (CIDR):\n")
+          input_list = ip_input.split(" ")
+          
+          ip_list = []
+          for ip in input_list:
+               try:
+                    if "/" in ip:
+                         new_range = ipaddress.ip_network(ip)
+                         ip_list.append(new_range)
+                         break
+                    else:
+                         new_ip = ipaddress.ip_address(ip)
+                         ip_list.append(new_ip)
+               except ValueError as e:
+                    print(f"{e} and won't be added")
+
+          if len(ip_list) > 0:
                userInput = True
-               return ipaddress.ip_address(ips)
-          except ValueError as e:
-               print(e)
+               return ip_list
 
 Print_Main_Menu()
