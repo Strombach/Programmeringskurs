@@ -31,10 +31,10 @@ def Print_Main_Menu():
 
 def Scan_all(ips_to_scan):
      print(ips_to_scan)
-     # scanner.scan(hosts='10.10.10.0/24', arguments='-n -sP -PE -PA21,23,80,3389')
-     # hosts_list = [(x, scanner[x]['status']['state']) for x in scanner.all_hosts()]
-     # for host, status in hosts_list:
-     #      print(host, status)
+     scanner.scan(hosts=str(ips_to_scan), arguments='-n -sP -PE -PA21,23,80,3389')
+     hosts_list = [(x, scanner[x]['status']['state']) for x in scanner.all_hosts()]
+     for host, status in hosts_list:
+          print(host, status)
 
 def Print_Scan_Menu():
      os.system("clear")
@@ -44,7 +44,7 @@ def Print_Scan_Menu():
                ips=input("Enter the ips to scan with space between every ip:\n")
                userInput = True
                return ipaddress.ip_address(ips)
-          except:
-               print("Failed to read IP")
+          except ValueError as e:
+               print(e)
 
 Print_Main_Menu()
