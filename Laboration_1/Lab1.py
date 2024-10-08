@@ -5,6 +5,13 @@ import ipaddress
 scanner = nmap.PortScanner()
 
 ### Functions
+def print_menu(options, menu_text):
+     if menu_text:
+          print(menu_text)
+
+     for index, option in enumerate(options):
+          print(f"{[index + 1]} {option}")
+
 def Save_To_File(data):
      print(data)
 
@@ -15,15 +22,12 @@ def Scan_Ip(ips_to_scan, flags):
           test = scanner.scan(hosts=ip_str, arguments=flags)
           print(test)
 
-def Nmap_Scan_Menu(ips_to_scan):
-     os.system("clear")
+def Nmap_Scan_Menu():
+     options = ["TCP Connect Scan (-sT)", "Stealth scan (-sS) !!REQUIRES RUNNING SCRIPT AS ROOT!!", "Version scan (-sV)", "Enter own flags", "Back to main menu"]
      userInput = False
      while not userInput:
-          print("What type of scan?")
-          print("1. TCP Connect Scan (-sT)")
-          print("2. Stealth scan (-sS) !!REQUIRES ROOT!!")
-          print("3. Version scan (-sV)")
-          print("4. Enter own flags")
+          os.system("clear")
+          print_menu(options, "NMAP Scanner")
           try:
                user_choice = int(input("Enter a number: "))
                match user_choice:
@@ -33,23 +37,24 @@ def Nmap_Scan_Menu(ips_to_scan):
                          flags = "-sS"
                     case 3:
                          flags = "-sV"
-                    # case 4:
-                    
+                    case 4:
+                         flags = input("Enter flags as you would in Nmap: ")
+                    case 5:
+                         break
                     case _:
                          raise ValueError
-               Scan_Ip(ips_to_scan, flags)
+               # Scan_Ip(ips_to_scan, flags)
           except ValueError:
                os.system("clear")
                print("Not a valid number. Try again")
+          print_menu(options, "NMAP Scanner")
      for ip in ips_to_scan:
           print(ip)
 
-
-
 def Print_Scan_Menu():
      os.system("clear")
-     userInput = False
-     while not userInput:
+     user_input = False
+     while not user_input:
           ip_input = input("Enter the IP:s to scan with space between every IP or IP range (CIDR):\n")
           input_list = ip_input.split(" ")
           
@@ -66,23 +71,22 @@ def Print_Scan_Menu():
                     os.system("clear")
                     print(f"{e} and won't be added to the list")
           if len(ip_list) > 0:
-               userInput = True
+               user_input = True
                return ip_list
 
 def Print_Main_Menu():
-     os.system("clear")
-     userInput = False
-     while not userInput:
-          print("**** Menu ****")
-          print("1. Enter IP:s manually")
-          print("2. Exit")
+     options = ["Enter Ip to scan", "Exit"]
+     # os.system("clear")
+     
+     while True:
+          os.system("clear")
+          print_menu(options, "NMAP Scanner")
           try:
                user_choice = int(input("Enter a number: "))
                match user_choice:
                     case 1:
                          print("Enter single or multiple IP:s to scan.")
-                         entered_ips = Print_Scan_Menu()
-                         Nmap_Scan_Menu(entered_ips)
+                         Nmap_Scan_Menu()
                     case 2:
                          print("Bye!")
                          quit()
@@ -91,8 +95,7 @@ def Print_Main_Menu():
           except ValueError:
                os.system("clear")
                print("Not a valid number. Try again")
-          else:
-               userInput = True
+          print_menu(options, "NMAP Scanner")
 
 ### Script
 Print_Main_Menu()
