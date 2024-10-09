@@ -2,8 +2,6 @@ import os
 import nmap
 import ipaddress
 
-scanner = nmap.PortScanner()
-
 ### Functions
 def print_menu(options, menu_text):
      os.system("clear")
@@ -16,18 +14,18 @@ def print_menu(options, menu_text):
 def Save_To_File(data):
      print(data)
 
-def Scan_Ip(ips_to_scan, flags):
+def scan_ips(ips_to_scan, flags):
+     scanner = nmap.PortScanner()
      for ip in ips_to_scan:
           ip_str = str(ip)
           print(f"Scanning {ip_str}")
-          test = scanner.scan(hosts=ip_str, arguments=flags)
-          print(test)
+          # test = scanner.scan(hosts=ip_str, arguments=flags)
 
 def ask_for_ips():
      user_input = False
      
      while not user_input:
-          ip_input = input("Enter the IP:s to scan with space between every IP or IP range (CIDR):\n")
+          ip_input = input("Enter the IP:s to scan with space between every IP or IP-range (CIDR):\n")
           input_list = ip_input.split(" ")
           
           ip_list = []
@@ -90,6 +88,7 @@ def main():
                     case 1:
                          nmap_flags = ask_for_scan()
                          list_of_ips = ask_for_ips()
+                         scan_result = scan_ips(list_of_ips, nmap_flags)
                          # TODO Remove this break
                          break
                     case 2:
@@ -103,7 +102,6 @@ def main():
                os.system("clear")
                print_menu(options, menu_text)
                print("Not a valid number. Try again")
-     print(nmap_flags, "\n", list_of_ips)
 
 ### Script
 if __name__ == "__main__":
