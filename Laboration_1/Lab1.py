@@ -1,30 +1,80 @@
 import os
 import nmap
 import ipaddress
+import json
+from datetime import datetime
 
 ### Functions
-def print_menu(options, menu_text):
-     os.system("clear")
+def print_menu(options, menu_text, clear_screen):
+     if clear_screen:
+          os.system("clear")
      if menu_text:
           print(menu_text)
 
      for index, option in enumerate(options):
           print(f"{[index + 1]} {option}")
 
+def formatting():
+     while True:
+          try:
+               formatted = input("Formatted? [y]es or [n]o: ").lower()
+               match formatted:
+                    case "y":
+                         return 4
+                    case "n":
+                         return None
+                    case _:
+                         raise ValueError
+          except ValueError:
+               print("[y]es or [n]o")
+
+def save_to_file(data):
+     options = ["As txt","As json", "Go back"]
+     menu_text = "Save file"
+     indent = 0
+     print_menu(options, menu_text, True)
+     while True:
+          todays_date = datetime.today()
+          try:
+               save_or_print = int(input("What type? "))
+               match save_or_print:
+                    case 1:
+                         filetype = "txt"
+                         indent = formatting()
+                    case 2:
+                         filetype = "json"
+                         indent = formatting()
+                    case 3:
+                         ask_if_print_or_save(data)
+                    case _:
+                         raise ValueError
+               with open(f'{todays_date}.{filetype}', 'w') as file:
+                    print(f"Saving to file {file.name}")
+                    json.dump(data,file, indent=indent)
+               break
+          except ValueError:
+               print("Not a valid number. Try again")
+
 def ask_if_print_or_save(data):
      options = ["Print to here in terminal","Save to file", "Back to main menu"]
      menu_text = "Results are in, what do you want to do?"
-     print_menu(options, menu_text)
+     print_results = False
      while True:
           try:
-               save_or_print = int(input("Enter number: "))
+               if print_results:
+                    print_results = False
+                    print_menu(options, menu_text, True)
+                    print(data)
+               else:
+                    print_menu(options, menu_text, True)
+               save_or_print = int(input("Enter an option: "))
                match save_or_print:
                     case 1:
-                         print(data)
+                         print_results = True
                     case 2:
-                         print("Saving to file")
+                         save_to_file(data)
                     case 3:
-                         break
+                         main()
                     case _:
                          raise ValueError
           except ValueError:
@@ -37,7 +87,8 @@ def scan_ips(ips_to_scan, flags):
           ip_str = str(ip)
           print(f"Scanning {ip_str}...")
           result = scanner.scan(hosts=ip_str, arguments=flags)
-          results[ip_str] = result["nmap"]["scanstats"] | result["scan"]
+          results["command_line"] = result["nmap"]["command_line"]
+          results[f"{ip_str}_results"] = result["nmap"]["scanstats"] | result["scan"]
      return results
 
 def ask_for_ips():
@@ -64,13 +115,12 @@ def ask_for_ips():
                return ip_list
 
 def ask_for_scan():
-     os.system("clear")
      menu_text = "What type of scan?"
      options = ["TCP Connect Scan (-sT)", "Stealth scan (-sS) !!REQUIRES RUNNING SCRIPT AS ROOT!!", "Version scan (-sV)", "Enter own flags", "Back to main menu"]
-     print_menu(options, menu_text)
+     print_menu(options, menu_text, True)
      while True:
           try:
-               user_choice = int(input("Enter a number: "))
+               user_choice = int(input("Choose arguments: "))
                match user_choice:
                     case 1:
                          flags = "-sT"
@@ -88,8 +138,7 @@ def ask_for_scan():
                     return flags
                break
           except ValueError:
-               os.system("clear")
-               print_menu(options, menu_text)
+               print_menu(options, menu_text,True)
                print("Not a valid number. Try again")
 
 def main():
@@ -97,7 +146,7 @@ def main():
      list_of_ips = []
      options = ["Enter IP:s to scan", "Exit"]
      menu_text = "NMAP Scanner"
-     print_menu(options, menu_text)
+     print_menu(options, menu_text, True)
      
      while True:
           try:
@@ -105,19 +154,21 @@ def main():
                match user_choice:
                     case 1:
                          nmap_flags = ask_for_scan()
-                         list_of_ips = ask_for_ips()
-                         scan_result = scan_ips(list_of_ips, nmap_flags)
-                         ask_if_print_or_save(scan_result)
+
+                         if nmap_flags:
+                              list_of_ips = ask_for_ips()
+                              scan_result = scan_ips(list_of_ips, nmap_flags)
+                              ask_if_print_or_save(scan_result)
+                         else:
+                              pass
                     case 2:
                          print("Bye!")
                          quit()
                     case _:
                          raise ValueError
-               os.system("clear")
-               print_menu(options, menu_text)
+               print_menu(options, menu_text, True)
           except ValueError:
-               os.system("clear")
-               print_menu(options, menu_text)
+               print_menu(options, menu_text, True)
                print("Not a valid number. Try again")
 
 ### Script
