@@ -11,15 +11,34 @@ def print_menu(options, menu_text):
      for index, option in enumerate(options):
           print(f"{[index + 1]} {option}")
 
-def Save_To_File(data):
-     print(data)
+def ask_if_print_or_save(data):
+     options = ["Print to here in terminal","Save to file", "Back to main menu"]
+     menu_text = "Results are in, what do you want to do?"
+     print_menu(options, menu_text)
+     while True:
+          try:
+               save_or_print = int(input("Enter number: "))
+               match save_or_print:
+                    case 1:
+                         print(data)
+                    case 2:
+                         print("Saving to file")
+                    case 3:
+                         break
+                    case _:
+                         raise ValueError
+          except ValueError:
+               print("Not a valid number. Try again")
 
 def scan_ips(ips_to_scan, flags):
      scanner = nmap.PortScanner()
+     results = dict()
      for ip in ips_to_scan:
           ip_str = str(ip)
-          print(f"Scanning {ip_str}")
-          # test = scanner.scan(hosts=ip_str, arguments=flags)
+          print(f"Scanning {ip_str}...")
+          result = scanner.scan(hosts=ip_str, arguments=flags)
+          results[ip_str] = result["nmap"]["scanstats"] | result["scan"]
+     return results
 
 def ask_for_ips():
      user_input = False
@@ -49,7 +68,6 @@ def ask_for_scan():
      menu_text = "What type of scan?"
      options = ["TCP Connect Scan (-sT)", "Stealth scan (-sS) !!REQUIRES RUNNING SCRIPT AS ROOT!!", "Version scan (-sV)", "Enter own flags", "Back to main menu"]
      print_menu(options, menu_text)
-     
      while True:
           try:
                user_choice = int(input("Enter a number: "))
@@ -89,8 +107,7 @@ def main():
                          nmap_flags = ask_for_scan()
                          list_of_ips = ask_for_ips()
                          scan_result = scan_ips(list_of_ips, nmap_flags)
-                         # TODO Remove this break
-                         break
+                         ask_if_print_or_save(scan_result)
                     case 2:
                          print("Bye!")
                          quit()
