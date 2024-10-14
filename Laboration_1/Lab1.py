@@ -116,7 +116,7 @@ def ask_for_ips():
 
 def ask_for_scan():
      menu_text = "What type of scan?"
-     options = ["TCP Connect Scan (-sT)", "Stealth scan (-sS) !!REQUIRES RUNNING SCRIPT AS ROOT!!", "Version scan (-sV)", "Enter own flags", "Back to main menu"]
+     options = ["TCP Connect Scan (-sT)", "Version scan (-sV)", "Enter own flags", "Back to main menu"]
      print_menu(options, menu_text, True)
      while True:
           try:
@@ -125,12 +125,10 @@ def ask_for_scan():
                     case 1:
                          flags = "-sT"
                     case 2:
-                         flags = "-sS"
-                    case 3:
                          flags = "-sV"
+                    case 3:
+                         flags = input("Enter flags as you would with Nmap: ")
                     case 4:
-                         flags = input("Enter flags as you would in Nmap: ")
-                    case 5:
                          break
                     case _:
                          raise ValueError
@@ -149,11 +147,11 @@ def main():
      print_menu(options, menu_text, True)
      while True:
           try:
-               user_choice = int(input("Enter a number: "))
+               user_choice = int(input("Enter a number for a menu option: "))
                match user_choice:
                     case 1:
                          nmap_flags = ask_for_scan()
-                         if nmap_flags:
+                         if len(nmap_flags) > 1:
                               list_of_ips = ask_for_ips()
                               scan_result = scan_ips(list_of_ips, nmap_flags)
                               ask_if_print_or_save(scan_result)
