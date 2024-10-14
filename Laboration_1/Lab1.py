@@ -1,7 +1,8 @@
 import os
 import nmap
-import ipaddress
 import json
+import pprint
+import ipaddress
 from datetime import datetime
 
 ### Functions
@@ -10,7 +11,6 @@ def print_menu(options, menu_text, clear_screen):
           os.system("clear")
      if menu_text:
           print(menu_text)
-
      for index, option in enumerate(options):
           print(f"{[index + 1]} {option}")
 
@@ -62,9 +62,10 @@ def ask_if_print_or_save(data):
      while True:
           try:
                if print_results:
+                    os.system("clear")
                     print_results = False
-                    print_menu(options, menu_text, True)
-                    print(data)
+                    pprint.pprint(data)
+                    print_menu(options, menu_text, False)
                else:
                     print_menu(options, menu_text, True)
                save_or_print = int(input("Enter an option: "))
@@ -88,12 +89,11 @@ def scan_ips(ips_to_scan, flags):
           print(f"Scanning {ip_str}...")
           result = scanner.scan(hosts=ip_str, arguments=flags)
           results["command_line"] = result["nmap"]["command_line"]
-          results[f"{ip_str}_results"] = result["nmap"]["scanstats"] | result["scan"]
+          results["scan_result"] = result["nmap"]["scanstats"] | result["scan"]
      return results
 
 def ask_for_ips():
      user_input = False
-     
      while not user_input:
           ip_input = input("Enter the IP:s to scan with space between every IP or IP-range (CIDR):\n")
           input_list = ip_input.split(" ")
@@ -147,14 +147,12 @@ def main():
      options = ["Enter IP:s to scan", "Exit"]
      menu_text = "NMAP Scanner"
      print_menu(options, menu_text, True)
-     
      while True:
           try:
                user_choice = int(input("Enter a number: "))
                match user_choice:
                     case 1:
                          nmap_flags = ask_for_scan()
-
                          if nmap_flags:
                               list_of_ips = ask_for_ips()
                               scan_result = scan_ips(list_of_ips, nmap_flags)
@@ -166,7 +164,6 @@ def main():
                          quit()
                     case _:
                          raise ValueError
-               print_menu(options, menu_text, True)
           except ValueError:
                print_menu(options, menu_text, True)
                print("Not a valid number. Try again")
