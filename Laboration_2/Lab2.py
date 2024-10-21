@@ -1,8 +1,14 @@
 import argparse
 import key_generator
+from cryptography.fernet import Fernet
 
-def encrypt_file(file, key):
-    print(f"Encrypt: {file} with {key}")
+def encrypt_data(data, key):
+    print("Encrypting data...")
+    
+    cipher_suite = Fernet(key)
+
+    cipher_data =  cipher_suite.encrypt(data)
+    return cipher_data
 
 def decrypt_file(file, key):
     print(f"Decrypt: {file} with {key}")
@@ -23,9 +29,10 @@ def main():
     
     args = parser.parse_args()
 
+    # Finding "content file".
     try:
-        with open(args.file, "r") as data_file:
-            data = data_file.read().strip()
+        with open(args.file, "rb") as content_file:
+            content = content_file.read().strip()
     except FileNotFoundError:
         print("The file to encrypt/decrypt couldn't be found")
         exit()
@@ -40,10 +47,21 @@ def main():
             key_file = args.key
 
         with open(key_file, "rb") as key_file:
-            key = key_file.read().splitlines()
+            key = key_file.read()
     except FileNotFoundError:
         print("The key file couldn't be found.")
         exit()
+
+    try:
+        if args.encrypt and not args.decrypt:
+            encrypted_data = encrypt_data(content, key)
+
+            with open(f"{args.file}.enc", "wb") as encrypted_file:
+                encrypted_file.write(encrypted_data)
+        else:
+            decrypt_file(content, key)
+    except Exception:
+        print("Couldn't save to file")
 
 if __name__ == "__main__":
     main()
