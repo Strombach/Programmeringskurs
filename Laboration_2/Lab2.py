@@ -23,8 +23,12 @@ def main():
     
     args = parser.parse_args()
 
-    with open(args.file, "r") as data_file:
-        data = data_file.read().strip()
+    try:
+        with open(args.file, "r") as data_file:
+            data = data_file.read().strip()
+    except FileNotFoundError:
+        print("The file to encrypt/decrypt couldn't be found")
+        exit()
 
     # Create or find the key.
     try:
@@ -34,10 +38,12 @@ def main():
             key_file = key_generator.generate_key(key_name)
         else:
             key_file = args.key
+
         with open(key_file, "rb") as key_file:
             key = key_file.read().splitlines()
     except FileNotFoundError:
-        print("The file couldn't be found.")
+        print("The key file couldn't be found.")
+        exit()
 
 if __name__ == "__main__":
     main()
