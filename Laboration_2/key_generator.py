@@ -10,3 +10,5 @@ def generate_key(name = None):
     with open(f"{key_name}.key", "wb") as key_file:
         key_file.write(key)
     print(f"{key_name}.key is now created and saved.")
+
+    return f"{key_name}.key"
