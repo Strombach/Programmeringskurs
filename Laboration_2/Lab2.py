@@ -8,7 +8,7 @@ def decrypt_file(file, key):
     print(f"Decrypt: {file} with {key}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Crypto tool", usage='%(prog)s [options]')
+    parser = argparse.ArgumentParser(description="Crypto tool", usage='%(prog)s -f [file to encrypt or decrypt] [options]')
     
     # Mandatory flag
     parser.add_argument("-f", "--file", help="The file to encrypt or decrypt.", required=True)
@@ -23,6 +23,10 @@ def main():
     
     args = parser.parse_args()
 
+    with open(args.file, "r") as data_file:
+        data = data_file.read().strip()
+
+    # Create or find the key.
     try:
         if args.newkey and not args.key:
             key_name = input("Name the key (Default [secret].key): ")
@@ -31,11 +35,9 @@ def main():
         else:
             key_file = args.key
         with open(key_file, "rb") as key_file:
-            key = key_file.read()
+            key = key_file.read().splitlines()
     except FileNotFoundError:
         print("The file couldn't be found.")
-    
-    print(key)
 
 if __name__ == "__main__":
     main()
