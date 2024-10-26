@@ -1,12 +1,16 @@
 from cryptography.fernet import Fernet
 
-def generate_key(name = None):
+def generate_key():
     key = Fernet.generate_key()
     
-    if name:
-        key_name = name
+    name_input = input("Name the key (Default [secret].key): ")
+
+    if name_input:
+        key_name = name_input
     else:
         key_name = "secret"
+    
+    print("Generating new key.")
     
     with open(f"{key_name}.key", "wb") as key_file:
         key_file.write(key)

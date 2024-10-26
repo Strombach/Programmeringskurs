@@ -34,9 +34,7 @@ def crypto_tool(flags):
     # Create or find the key.
     try:
         if flags.newkey and not flags.key and not flags.decryptkey:
-            key_name = input("Name the key (Default [secret].key): ")
-            print("Generating new key.")
-            key_file = generate_key(key_name)
+            key_file = generate_key()
         else:
             if flags.key or flags.decryptkey:
                 key_file = flags.key or flags.decryptkey
