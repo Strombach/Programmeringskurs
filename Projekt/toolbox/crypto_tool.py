@@ -68,6 +68,8 @@ def crypto_tool(flags):
 
 if __name__ == "__main__":
 
+    # When running as stand-alone module
+
     from key_generator import generate_key
 
     parser = argparse.ArgumentParser(description="Crypto tool", usage='%(prog)s -f [file to encrypt or decrypt] [options]')
