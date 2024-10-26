@@ -2,6 +2,15 @@
 
 All the modules/tools in the toolbox could be used stand-alone.
 
+### Key Generator
+A samll script to generate a key file to be used to encrypt/decrypt files with.
+
+#### Example:
+- To create a new key:
+```bash
+python key_generator.py
+```
+
 ### Crypto Tool
 Dependency: key_generator.py
 
