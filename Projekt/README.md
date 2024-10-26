@@ -1,5 +1,37 @@
 # Toolbox
 
+All the modules/tools in the toolbox could be used stand-alone.
+
+### Crypto Tool
+Dependency: key_generator.py
+
+#### Usage:
+When running the crypto tool as a stand alone some arguments is needed.  
+Default arguments are optional to add. 
+
+|Short Form|Long Form|Required|Description|
+|---|---|---|---|
+|-f|--file| Yes|The file to encrypt or decrypt.|
+|-nk|--newkey|No (Default)|Generate a new key. Default mode if own key isn't provided.|
+|-k|--key|No|A key file that could be used to encrypt another file with instead of creating aa new.|
+|-e|--encrypt|No (Default)|To encrypt a file. Default mode if decryptkey isn't provided.|
+|-dk|--decryptkey|No|The key file used to decrypt an encrypted file with.|
+|-h|--help|No| List all arguments.|
+
+#### Example:
+- To encrypt a file with a new key:
+```bash
+python crypto_tool.py -f test.txt
+```
+- To encrypt a file with a existing key:
+```bash
+python crypto_tool.py -f test.txt -k secret.key
+```
+- To decrypt a file:
+```bash
+python crypto_tool.py -f test.txt.enc -dk secret.key
+```
+
 ### Assignment  
 Bygg en toolbox bestående av flera Python-script som kan användas för penetrationstester eller inom IT-säkerhet.
 
