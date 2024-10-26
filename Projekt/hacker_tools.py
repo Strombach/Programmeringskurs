@@ -1,4 +1,5 @@
 from toolbox import crypto_tool
+from toolbox import domenus
 
 class Args:
     def __init__(self):
@@ -11,3 +12,5 @@ class Args:
 test = Args()
 
 crypto_tool.crypto_tool(test)
+
+domenus.main()
