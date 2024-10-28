@@ -7,9 +7,8 @@ HELP_STRING = """
         Is a sub[DOM]ain [ENU]merator using [S]ublist3r.
         """
 
-def main():
-    print(HELP_STRING)
-    domain = "example.com"
+def main(flags):
+    domain = flags.domain
     subdomains = sublister(domain, 20, ports=None, silent=True, verbose=False, savefile=None, enable_bruteforce=False, engines=None)
     print("Subdomains found:")
     for subdomain in subdomains:
@@ -27,4 +26,4 @@ if __name__ == "__main__":
 
     argparse_args = parser.parse_args()
 
-    main()
+    main(argparse_args)
