@@ -3,7 +3,7 @@ from cryptography.fernet import Fernet
 
 def encrypt_data(data, key):
     print("Encrypting data...")
-    
+
     cipher_suite = Fernet(key)
 
     cipher_data = cipher_suite.encrypt(data.encode())
@@ -17,14 +17,14 @@ def decrypt_data(data, key):
     plain_data = cipher_suite.decrypt(data)
     return plain_data
 
-def crypto_tool(flags):
+def main(flags):
 
     # Finding "content file".
     try:
         if flags.decryptkey:
             with open(flags.file, "rb") as content_file:
                 content = content_file.read()
-        else:    
+        else:
             with open(flags.file, "r") as content_file:
                 content = content_file.read()
     except FileNotFoundError:
@@ -68,25 +68,83 @@ def crypto_tool(flags):
 
 if __name__ == "__main__":
 
-    # When running as stand-alone module
-
     from key_generator import generate_key
 
     parser = argparse.ArgumentParser(description="Crypto tool", usage='%(prog)s -f [file to encrypt or decrypt] [options]')
-    
+
     # Mandatory flag
     parser.add_argument("-f", "--file", help="The file to encrypt or decrypt.", required=True)
-    
+
     # Default options
     parser.add_argument("-nk", "--newkey", action="store_false", help="Create a new file so encrypt/decrypt other files with.")
     parser.add_argument("-e", "--encrypt", action="store_false", help="If the script should encrypt a file.")
-    
+
     # Optional
     parser.add_argument("-k", "--key", help="If you got a key file to encrypt with, use this flag.")
     parser.add_argument("-dk", "--decryptkey", help="Key file to decrypt with.")
-    
+
     argparse_args = parser.parse_args()
 
-    crypto_tool(argparse_args)
+    main(argparse_args)
 else:
+    import os
+    from .args import Crypto_Args
     from .key_generator import generate_key
+
+    def crypto_tool():
+        os.system("clear")
+
+        while True:
+            data_file = input("What file to encrypt/decrypt: ")
+            if not os.path.isfile(data_file):
+                print("File not found")
+                continue
+            else:
+                break
+
+        while True:
+            decrypt_or_encrypt = input("Encrypt or decrypt [e/d]: ")
+            if decrypt_or_encrypt == "e":
+                encrypt = True
+                break
+            elif decrypt_or_encrypt == "d":
+                encrypt = False
+                break
+            else:
+                continue
+
+        if encrypt:
+            while True:
+                print("Test1")
+                newkey_or_existingkey = input("Create a new key? [y/n]: ")
+                if newkey_or_existingkey == "y":
+                    newkey = True
+                    existingkey = None
+                    break
+                elif newkey_or_existingkey == "n":
+                    newkey = False
+                    break
+                else:
+                    continue
+        else:
+            newkey = False
+            while True:
+                print("Test2")
+                if not encrypt:
+                    decryptkey = input("What key to decrypt with?: ")
+                    existingkey = None
+                    break
+                elif encrypt and not newkey:
+                    existingkey = input("What key to encrypt with?: ")
+                    decryptkey = None
+                    break
+
+                if not newkey and not os.path.isfile(existingkey or decryptkey):
+                    print("File not found")
+                    continue
+                else:
+                    break
+
+        args = Crypto_Args(file=data_file,encrypt=encrypt,decryptkey=decryptkey,newkey=newkey,key=existingkey)
+
+        main(args)
