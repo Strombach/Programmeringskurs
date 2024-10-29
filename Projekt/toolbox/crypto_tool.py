@@ -92,7 +92,6 @@ else:
     from .key_generator import generate_key
 
     def crypto_tool():
-        os.system("clear")
         newkey = False
         decryptkey = None
         existingkey = None
@@ -129,7 +128,6 @@ else:
                 else:
                     continue
 
-
         while True:
             if not encrypt:
                 decryptkey = input("What key to decrypt with?: ")
@@ -141,7 +139,6 @@ else:
                 continue
             else:
                 break
-
 
         args = Crypto_Args(file=data_file,encrypt=encrypt,decryptkey=decryptkey,newkey=newkey,key=existingkey)
 
