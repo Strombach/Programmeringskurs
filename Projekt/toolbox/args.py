@@ -1,6 +1,7 @@
 # A file to keep all the args-classes needed to run tools in the main script.
 #TODO: For better code
 
+import os
 import validators
 
 class Crypto_Args:
@@ -16,7 +17,7 @@ class Domenus_Args:
     def __init__(self):
         self.domain = self.set_domain()
         self.threads = self.set_threads()
-        self.ports = self.set_ports(),
+        self.ports = self.set_ports()
         self.silent = self.set_silent()
         self.verbose = self.set_verbose()
         self.savefile = self.set_savefile()
@@ -28,6 +29,7 @@ class Domenus_Args:
             domain = input("Enter a domain: ").strip()
 
             if not validators.domain(domain):
+                os.system("clear")
                 print("Not a valid domain")
                 continue
             else:
@@ -35,6 +37,7 @@ class Domenus_Args:
 
     def set_threads(self):
         DEFAULT_THREADS = 10
+
         while True:
             try:
                 threads = input(f"Enter number of threads (Leave empty for {DEFAULT_THREADS}): ").strip()
@@ -47,7 +50,25 @@ class Domenus_Args:
                 print("Not a number...")
 
     def set_ports(self):
-        return None
+        while True:
+            try:
+                ports = input("Specific ports, comma-separated (Leave emtpy for None): ").strip().replace(" ", "")
+                if ports == "":
+                    return None
+                else:
+                    port_strings = ports.split(",")
+
+                    for port_str in port_strings:
+                        if port_str.isdigit():
+                            port = int(port_str)
+                            if not 0 <= port <=65535:
+                                raise ValueError(f"Invalid port: {port}")
+                        else:
+                            raise ValueError(f"{port_str} is not a number")
+                    return ports
+
+            except ValueError as err:
+                print(err)
 
     def set_silent(self):
         return True

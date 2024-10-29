@@ -8,7 +8,15 @@ HELP_STRING = """
         """
 
 def main(flags):
-    subdomains = sublister(flags.domain, 20, ports=None, silent=True, verbose=False, savefile=None, enable_bruteforce=False, engines=None)
+    print(flags.ports)
+    subdomains = sublister(domain=flags.domain,
+    threads=flags.threads,
+    ports=flags.ports,
+    silent=flags.silent,
+    verbose=flags.verbose,
+    savefile=None,
+    enable_bruteforce=False,
+    engines=None)
     print("Subdomains found:")
     for subdomain in subdomains:
         print(subdomain)
@@ -21,7 +29,14 @@ if __name__ == "__main__":
         description= HELP_STRING
 )
 
+    # Mandatory
     parser.add_argument("-d","--domain", help="The domain[s] to enumerate.")
+
+    # Optional to change
+    parser.add_argument("-t", "--threads", type=int, default=10, help="Number of threads (Default: 10).")
+    parser.add_argument("-p", "--ports", default=None, help="List of ports, comma-separated.")
+    parser.add_argument("-s", "--silent", action="store_true", help="Set to turn Silent mode off")
+    parser.add_argument("-v", "--verbose", action="store_false", help="Set to turn verbose mode on")
 
     args = parser.parse_args()
 
