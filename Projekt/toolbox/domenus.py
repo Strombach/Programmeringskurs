@@ -8,8 +8,8 @@ HELP_STRING = """
         """
 
 def main(flags):
-    print(flags.ports)
-    subdomains = sublister(domain=flags.domain,
+    subdomains = sublister(
+    domain=flags.domain,
     threads=flags.threads,
     ports=flags.ports,
     silent=flags.silent,
@@ -17,9 +17,12 @@ def main(flags):
     savefile=None,
     enable_bruteforce=False,
     engines=None)
+
     print("Subdomains found:")
     for subdomain in subdomains:
         print(subdomain)
+
+    input("Press Enter to continue...")
 
 if __name__ == "__main__":
 

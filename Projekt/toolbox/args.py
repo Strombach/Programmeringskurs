@@ -13,7 +13,6 @@ class Crypto_Args:
         self.key = key
 
 class Domenus_Args:
-
     def __init__(self):
         self.domain = self.set_domain()
         self.threads = self.set_threads()
@@ -71,7 +70,15 @@ class Domenus_Args:
                 print(err)
 
     def set_silent(self):
-        return True
+        while True:
+            turn_off = input("Turn off silent mode (y or leave empty): ").lower()
+            match turn_off:
+                case "y":
+                    return False
+                case "":
+                    return True
+                case _:
+                    print("Not valid. [y] or leave empty")
 
     def set_verbose(self):
         return False
