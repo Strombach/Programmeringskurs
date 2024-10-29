@@ -93,6 +93,9 @@ else:
 
     def crypto_tool():
         os.system("clear")
+        newkey = False
+        decryptkey = None
+        existingkey = None
 
         while True:
             data_file = input("What file to encrypt/decrypt: ")
@@ -119,31 +122,26 @@ else:
                 newkey_or_existingkey = input("Create a new key? [y/n]: ")
                 if newkey_or_existingkey == "y":
                     newkey = True
-                    existingkey = None
                     break
                 elif newkey_or_existingkey == "n":
                     newkey = False
                     break
                 else:
                     continue
-        else:
-            newkey = False
-            while True:
-                print("Test2")
-                if not encrypt:
-                    decryptkey = input("What key to decrypt with?: ")
-                    existingkey = None
-                    break
-                elif encrypt and not newkey:
-                    existingkey = input("What key to encrypt with?: ")
-                    decryptkey = None
-                    break
 
-                if not newkey and not os.path.isfile(existingkey or decryptkey):
-                    print("File not found")
-                    continue
-                else:
-                    break
+
+        while True:
+            if not encrypt:
+                decryptkey = input("What key to decrypt with?: ")
+            elif encrypt and not newkey:
+                existingkey = input("What key to encrypt with?: ")
+
+            if not newkey and not os.path.isfile(existingkey or decryptkey):
+                print("File not found")
+                continue
+            else:
+                break
+
 
         args = Crypto_Args(file=data_file,encrypt=encrypt,decryptkey=decryptkey,newkey=newkey,key=existingkey)
 
