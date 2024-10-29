@@ -8,8 +8,7 @@ HELP_STRING = """
         """
 
 def main(flags):
-    domain = flags.domain
-    subdomains = sublister(domain, 20, ports=None, silent=True, verbose=False, savefile=None, enable_bruteforce=False, engines=None)
+    subdomains = sublister(flags.domain, 20, ports=None, silent=True, verbose=False, savefile=None, enable_bruteforce=False, engines=None)
     print("Subdomains found:")
     for subdomain in subdomains:
         print(subdomain)
@@ -24,6 +23,16 @@ if __name__ == "__main__":
 
     parser.add_argument("-d","--domain", help="The domain[s] to enumerate.")
 
-    argparse_args = parser.parse_args()
+    args = parser.parse_args()
 
-    main(argparse_args)
+    main(args)
+else:
+    import os
+    import time
+    from .args import Domenus_Args
+
+    def domenus():
+
+        args = Domenus_Args()
+
+        main(args)
