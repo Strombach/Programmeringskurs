@@ -18,11 +18,11 @@ def main(flags):
     enable_bruteforce=False,
     engines=None)
 
-    print("Subdomains found:")
+    print("\nSubdomains found:\n")
     for subdomain in subdomains:
         print(subdomain)
 
-    input("Press Enter to continue...")
+    input("\nPress Enter to continue...")
 
 if __name__ == "__main__":
 
