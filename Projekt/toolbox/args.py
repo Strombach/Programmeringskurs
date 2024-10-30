@@ -28,7 +28,6 @@ class Domenus_Args:
             domain = input("Enter a domain: ").strip()
 
             if not validators.domain(domain):
-                os.system("clear")
                 print("Not a valid domain")
                 continue
             else:
@@ -81,7 +80,15 @@ class Domenus_Args:
                     print("Not valid. [y] or leave empty")
 
     def set_verbose(self):
-        return False
+        while True:
+            turn_off = input("Turn on verbose mode (y or leave empty): ").lower()
+            match turn_off:
+                case "y":
+                    return True
+                case "":
+                    return False
+                case _:
+                    print("Not valid. [y] or leave empty")
 
     def set_savefile(self):
         return None
