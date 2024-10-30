@@ -1,14 +1,14 @@
 import os
 import pyfiglet
-from toolbox import crypto_tool
-from toolbox import domenus
+from toolbox import crypto_tool, domenus
 
 def create_title(text):
     return pyfiglet.figlet_format(text)
-os.system('clear')
+
 while True:
+    os.system('clear')
+    print(create_title("Hacker Toolbox"))
     print("""
-    Hacker Toolbox
     1. Crypto Tool
     2. DomEnus
     ---
