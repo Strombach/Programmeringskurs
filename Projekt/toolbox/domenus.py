@@ -36,18 +36,17 @@ def main(flags):
     engines=None)
 
     if flags.filterInclude or flags.filterExclude:
-        if flags.filterInclude:
-            filtered_result = filter_result(flags.filterInclude, result, include=True)
-        else:
+        if flags.filterExclude:
             filtered_result = filter_result(flags.filterExclude, result, include=False)
-
+        else:
+            filtered_result = filter_result(flags.filterInclude, result, include=True)
         print("\nSubdomains found:\n")
         for subdomain in filtered_result:
             print(subdomain)
-
-    print("\nSubdomains found:\n")
-    for subdomain in result:
-        print(subdomain)
+    else:
+        print("\nSubdomains found:\n")
+        for subdomain in result:
+            print(subdomain)
 
     input("\nPress Enter to continue...")
 
