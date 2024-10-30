@@ -37,9 +37,9 @@ if __name__ == "__main__":
 
     # Optional to change
     parser.add_argument("-t", "--threads", type=int, default=10, help="Number of threads (Default: 10).")
-    parser.add_argument("-p", "--ports", default=None, help="List of ports, comma-separated.")
-    parser.add_argument("-s", "--silent", action="store_true", help="Set to turn Silent mode off")
-    parser.add_argument("-v", "--verbose", action="store_false", help="Set to turn verbose mode on")
+    parser.add_argument("-p", "--ports", default=None, help="List of ports, comma separated.")
+    parser.add_argument("-s", "--silent", action="store_true", help="Set to turn Silent mode on")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Set to turn verbose mode on")
 
     args = parser.parse_args()
 

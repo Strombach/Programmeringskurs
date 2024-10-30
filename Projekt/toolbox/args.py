@@ -91,10 +91,13 @@ class Domenus_Args:
                     print("Not valid. [y] or leave empty")
 
     def set_savefile(self):
+        # Not implemented here because own solution in domenus script.
         return None
 
     def set_enable_bruteforce(self):
+        # Not implemented cause only want filter and to be stealth.
         return False
 
     def set_engines(self):
+        # Wanting to use every engine availible this option isn't implemented yet.
         return None
