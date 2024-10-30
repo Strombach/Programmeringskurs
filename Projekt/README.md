@@ -15,8 +15,8 @@ python key_generator.py
 Dependency: key_generator.py
 
 #### Usage:
-When running the crypto tool as a stand alone some arguments is needed.  
-Default arguments are optional to add. 
+When running the crypto tool as a stand alone some arguments is needed.
+Default arguments are optional to add.
 
 |Short Form|Long Form|Required|Description|
 |---|---|---|---|
@@ -41,7 +41,33 @@ python crypto_tool.py -f test.txt -k secret.key
 python crypto_tool.py -f test.txt.enc -dk secret.key
 ```
 
-### Assignment  
+### DomEnus
+A domain enumerator.
+
+|Short Form|Long Form|Required|Description|
+|---|---|---|---|
+|-d|--domain|Yes|The domain to enumerate.|
+|-p|--ports|No|Add comma separated list of ports that will be checked.|
+|-s|--silent|No|Set for turning on silent mode.|
+|-t|--threads|No|Number of threads to use. Default is 10|
+|-v|--verbose|No|Set to turn on verbose mode.|
+|-h|--help|No|List all arguments.|
+
+#### Example:
+- Enumerate example.com with 20 threads:
+```bash
+python domenus.py -d example.com -t 20
+```
+- Enumerate -with minimal output, silent mode:
+```bash
+python domenus.py -d example.com -s
+```
+- Enumerating and serching for specific ports with verbose mode.
+```bash
+python domenus.py -d example.com -v -p 80,443
+```
+
+### Assignment
 Bygg en toolbox bestående av flera Python-script som kan användas för penetrationstester eller inom IT-säkerhet.
 
 Använd dig av de tekniker och paket som vi gått igenom under kursen eller kunskap du har sedan tidigare.
