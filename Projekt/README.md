@@ -47,6 +47,8 @@ A domain enumerator.
 |Short Form|Long Form|Required|Description|
 |---|---|---|---|
 |-d|--domain|Yes|The domain to enumerate.|
+|-fe|--filterExclude|No|Filter out subdomains that appears in comma separated wordlist|
+|-fi|--filterInclude|No|Filter out subdomains that isn't present in comma separated wordlist|
 |-p|--ports|No|Add comma separated list of ports that will be checked.|
 |-s|--silent|No|Set for turning on silent mode.|
 |-t|--threads|No|Number of threads to use. Default is 10|
@@ -66,6 +68,15 @@ python domenus.py -d example.com -s
 ```bash
 python domenus.py -d example.com -v -p 80,443
 ```
+- Filter out www and blog from subdomains.
+```bash
+python domenus.py -d example.com -fe "www, blog"
+```
+- Filter out everything that isn't www or blog from subdomains.
+```bash
+python domenus.py -d example.com -fi "www, blog"
+```
+#### !OBS! Exlude has priority, so if both flags are present, the app will only exclude the subdomains !OBS!
 
 ### Assignment
 Bygg en toolbox bestående av flera Python-script som kan användas för penetrationstester eller inom IT-säkerhet.
