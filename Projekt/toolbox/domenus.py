@@ -7,8 +7,25 @@ HELP_STRING = """
         Is a sub[DOM]ain [ENU]merator using [S]ublist3r.
         """
 
+def save_to_file():
+    print("Saving...")
+
+def filter_result(filter_input, subdomains, include = False):
+    filter_list = filter_input.replace(" ","").lower().split(",")
+
+    filtered_subdomains = []
+
+    for subdomain in subdomains:
+        for filter_text in filter_list:
+            if filter_text in subdomain and include:
+                filtered_subdomains.append(subdomain)
+            elif not filter_text in subdomain and not include:
+                filtered_subdomains.append(subdomain)
+
+    return filtered_subdomains
+
 def main(flags):
-    subdomains = sublister(
+    result = sublister(
     domain=flags.domain,
     threads=flags.threads,
     ports=flags.ports,
@@ -18,8 +35,18 @@ def main(flags):
     enable_bruteforce=False,
     engines=None)
 
+    if flags.filterInclude or flags.filterExclude:
+        if flags.filterInclude:
+            filtered_result = filter_result(flags.filterInclude, result, include=True)
+        else:
+            filtered_result = filter_result(flags.filterExclude, result, include=False)
+
+        print("\nSubdomains found:\n")
+        for subdomain in filtered_result:
+            print(subdomain)
+
     print("\nSubdomains found:\n")
-    for subdomain in subdomains:
+    for subdomain in result:
         print(subdomain)
 
     input("\nPress Enter to continue...")
@@ -36,6 +63,8 @@ if __name__ == "__main__":
     parser.add_argument("-d","--domain", help="The domain[s] to enumerate.")
 
     # Optional to change
+    parser.add_argument("-fi", "--filterInclude", help="Comma separated list of words to search for and include.")
+    parser.add_argument("-fe", "--filterExclude", help="Comma separated list of words to search for and exclude.")
     parser.add_argument("-t", "--threads", type=int, default=10, help="Number of threads (Default: 10).")
     parser.add_argument("-p", "--ports", default=None, help="List of ports, comma separated.")
     parser.add_argument("-s", "--silent", action="store_true", help="Set to turn Silent mode on")
