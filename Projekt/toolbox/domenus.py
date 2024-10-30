@@ -17,7 +17,7 @@ def filter_result(filter_input, subdomains, include = False):
 
     for subdomain in subdomains:
         for filter_text in filter_list:
-            if filter_text in subdomain and include:
+            if filter_text in subdomain.lower() and include:
                 filtered_subdomains.append(subdomain)
             elif not filter_text in subdomain and not include:
                 filtered_subdomains.append(subdomain)
@@ -25,6 +25,7 @@ def filter_result(filter_input, subdomains, include = False):
     return filtered_subdomains
 
 def main(flags):
+    print("Searching for subdomains...")
     result = sublister(
     domain=flags.domain,
     threads=flags.threads,

@@ -20,8 +20,8 @@ class Domenus_Args:
         self.silent = self.set_silent()
         self.verbose = self.set_verbose()
         self.savefile = self.set_savefile()
-        self.enable_bruteforce = self.set_enable_bruteforce()
-        self.engines = self.set_engines()
+        self.filterExclude = self.set_filterExclude()
+        self.filterInclude = self.set_filterInclude()
 
     def set_domain(self):
         while True:
@@ -94,10 +94,21 @@ class Domenus_Args:
         # Not implemented here because own solution in domenus script.
         return None
 
-    def set_enable_bruteforce(self):
-        # Not implemented cause only want filter and to be stealth.
-        return False
+    def set_filterExclude(self):
+        while True:
+            exclude_words = input("Any specific words to be excluded from the results (comma separated): ").lower().strip().replace(" ", "")
 
-    def set_engines(self):
-        # Wanting to use every engine availible this option isn't implemented yet.
-        return None
+            if exclude_words == "":
+                return None
+            else:
+                return exclude_words
+
+    def set_filterInclude(self):
+        if not self.filterExclude:
+            while True:
+                include_words = input("Any specific words to be excluded from the results (comma separated): ").lower().strip().replace(" ", "")
+
+                if include_words == "":
+                    return None
+                else:
+                    return include_words
