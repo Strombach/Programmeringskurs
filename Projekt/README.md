@@ -42,8 +42,13 @@ python crypto_tool.py -f test.txt.enc -dk secret.key
 ```
 
 ### DomEnus
-A domain enumerator.
+A domain enumerator using Sublist3r.
 
+**Known limitations:**
+- Sublist3r bruteforcing isn't used in this module.
+- All engines in Sublist3r are used and can't be disabled.
+
+#### Arguments
 |Short Form|Long Form|Required|Description|
 |---|---|---|---|
 |-d|--domain|Yes|The domain to enumerate.|
