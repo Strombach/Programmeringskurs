@@ -106,7 +106,7 @@ class Domenus_Args:
     def set_filterInclude(self):
         if not self.filterExclude:
             while True:
-                include_words = input("Any specific words to be excluded from the results (comma separated): ").lower().strip().replace(" ", "")
+                include_words = input("Any specific words to be included in the results (comma separated): ").lower().strip().replace(" ", "")
 
                 if include_words == "":
                     return None

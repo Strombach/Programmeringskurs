@@ -10,6 +10,11 @@ HELP_STRING = """
 def save_to_file():
     print("Saving...")
 
+def print_results(result):
+    print("\nSubdomains found:\n")
+    for subdomain in result:
+        print(subdomain)
+
 def filter_result(filter_input, subdomains, include = False):
     filter_list = filter_input.replace(" ","").lower().split(",")
 
@@ -26,7 +31,7 @@ def filter_result(filter_input, subdomains, include = False):
 
 def main(flags):
     print("Searching for subdomains...")
-    result = sublister(
+    results = sublister(
     domain=flags.domain,
     threads=flags.threads,
     ports=flags.ports,
@@ -36,20 +41,35 @@ def main(flags):
     enable_bruteforce=False,
     engines=None)
 
-    if flags.filterInclude or flags.filterExclude:
+    if flags.filterInclude or flags.filterExclude and len(results) > 0:
         if flags.filterExclude:
-            filtered_result = filter_result(flags.filterExclude, result, include=False)
+            filtered_results = filter_result(flags.filterExclude, results, include=False)
         else:
-            filtered_result = filter_result(flags.filterInclude, result, include=True)
-        print("\nSubdomains found:\n")
-        for subdomain in filtered_result:
-            print(subdomain)
-    else:
-        print("\nSubdomains found:\n")
-        for subdomain in result:
-            print(subdomain)
+            filtered_results = filter_result(flags.filterInclude, results, include=True)
 
-    input("\nPress Enter to continue...")
+        if len(filtered_result) < 1 and len(results) > 0:
+            print("No filtered results found but there are other subdomains")
+
+            while True:
+                see_other_results = input("Do you want to see them? [y/n] ").lower()
+                if see_other_results == "y":
+                    print_results(results)
+                    break
+                elif see_other_results == "n":
+                    break
+                else:
+                    print("Not valid input: Only [y] or [n] is accepted. ")
+    elif len(results) > 0:
+        print_results(results)
+    else:
+        print("No subdomains found...")
+        input("Press Enter to go back to main menu...")
+
+    if "filtered_results" in locals() and len(filtered_results) > 0:
+        input("Save filtered results to file?")
+
+    if "results" in locals() and len(results) > 0:
+        input("Save all results to file?")
 
 if __name__ == "__main__":
 
