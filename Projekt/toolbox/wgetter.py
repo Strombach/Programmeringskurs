@@ -22,24 +22,23 @@ def main(flags):
 
         for tag in soup.find_all(["img", "link", "script"]):
             if tag.name == "img" or tag.name == "script":
-                asset_url = tag.get("src")
+                asset_attribute = "src"
             else:
-                asset_url = tag.get("href")
+                asset_attribute = "href"
+
+            asset_url = tag.get(asset_attribute)
 
             if asset_url:
                 asset_url = urljoin(flags.url, asset_url)
                 asset_name = os.path.basename(urlparse(asset_url).path)
-                print(asset_url)
-                print(asset_name)
 
                 asset = requests.get(asset_url)
                 if asset.status_code == 200:
-                    print("Found asset")
                     with open(f"downloaded_assets/{asset_name}", "wb") as asset_file:
                         asset_file.write(asset.content)
                     print(f"Downloaded asset: {asset_name}")
 
-                    tag["src"] = os.path.join(asset_dir, asset_name)
+                    tag[asset_attribute] = os.path.join(asset_dir, asset_name)
                 else:
                     print(f"Failed to find: {asset_url}")
 
