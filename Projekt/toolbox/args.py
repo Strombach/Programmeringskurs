@@ -112,3 +112,17 @@ class Domenus_Args:
                     return None
                 else:
                     return include_words
+
+class Webgetter_args:
+    def __init__(self):
+        self.url = self.set_url()
+
+    def set_url(self):
+        while True:
+            url = input("Enter a URL: ").strip()
+
+            if not validators.url(url):
+                print("Not a valid URL")
+                continue
+            else:
+                return url

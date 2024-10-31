@@ -62,6 +62,9 @@ if __name__ == "__main__":
 
     main(args)
 else:
+    from .args import Webgetter_args
+
     def wgetter():
-        print("WebGetter")
-        input()
+        args = Webgetter_args()
+
+        main(args)
