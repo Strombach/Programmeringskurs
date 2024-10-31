@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 
 HELP_STRING = """
-        Wgetter
+        WebGetter
         """
 
 def main(flags):
@@ -61,3 +61,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args)
+else:
+    def wgetter():
+        print("WebGetter")
+        input()

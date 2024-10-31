@@ -1,6 +1,6 @@
 import os
 import pyfiglet
-from toolbox import crypto_tool, domenus
+from toolbox import crypto_tool, domenus, wgetter
 
 def create_title(text):
     return pyfiglet.figlet_format(text)
@@ -9,12 +9,13 @@ while True:
     os.system('clear')
     print(create_title("Hacker Toolbox"))
     print("""
-    1. Crypto Tool
-    2. DomEnus
-    ---
-    9. Help
-    0. Exit
-    """)
+1. Crypto Tool
+2. DomEnus
+3. WebGetter
+---
+9. Help
+0. Exit
+""")
     menu_choice = input("What app to use?: ")
 
     match(menu_choice):
@@ -26,6 +27,10 @@ while True:
             os.system("clear")
             print(create_title("DomEnus"))
             domenus.domenus()
+        case("3"):
+            os.system("clear")
+            print(create_title("WebGetter"))
+            wgetter.wgetter()
         case("0"):
             exit()
         case _:
