@@ -1,4 +1,5 @@
 import argparse
+from datetime import date
 from sublist3r import main as sublister
 
 HELP_STRING = """
@@ -7,8 +8,12 @@ HELP_STRING = """
         Is a sub[DOM]ain [ENU]merator using [S]ublist3r.
         """
 
-def save_to_file():
-    print("Saving...")
+def save_to_file(results, file_name):
+    print(f"Saving {file_name}...")
+
+    with open(f'{file_name}.txt', 'w') as file:
+        result_str = "\n".join(results)
+        file.write(result_str)
 
 def print_results(result):
     print("\nSubdomains found:\n")
@@ -47,7 +52,7 @@ def main(flags):
         else:
             filtered_results = filter_result(flags.filterInclude, results, include=True)
 
-        if len(filtered_result) < 1 and len(results) > 0:
+        if len(filtered_results) < 1 and len(results) > 0:
             print("No filtered results found but there are other subdomains")
 
             while True:
@@ -58,18 +63,35 @@ def main(flags):
                 elif see_other_results == "n":
                     break
                 else:
-                    print("Not valid input: Only [y] or [n] is accepted. ")
-    elif len(results) > 0:
-        print_results(results)
-    else:
-        print("No subdomains found...")
-        input("Press Enter to go back to main menu...")
+                    print("Not valid input: Only [y] or [n] is accepted.")
 
     if "filtered_results" in locals() and len(filtered_results) > 0:
-        input("Save filtered results to file?")
+        print_results(filtered_results)
+        while True:
+            save_filtered = input("Save filtered results to file? [y/n] ")
+
+            if save_filtered == "y":
+                save_to_file(filtered_results, f"filtered_{flags.domain}_{date.today()}")
+                break
+            elif save_filtered == "n":
+                break
+            else:
+                print("Not valid input: Only [y] or [n] is accepted.")
 
     if "results" in locals() and len(results) > 0:
-        input("Save all results to file?")
+        print_results(results)
+        while True:
+            save_results = input("Save all results to file? [y/n] ")
+
+            if save_results == "y":
+                save_to_file(results, f"{flags.domain}_{date.today()}")
+                break
+            elif save_results == "n":
+                break
+            else:
+                print("Not valid input: Only [y] or [n] is accepted.")
+
+    # input()
 
 if __name__ == "__main__":
 
