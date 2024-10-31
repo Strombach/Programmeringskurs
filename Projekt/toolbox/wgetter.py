@@ -20,9 +20,11 @@ def main(flags):
         asset_dir = "downloaded_assets"
         os.makedirs(asset_dir)
 
-        for tag in soup.find_all("img"):
-            asset_url = tag.get("src")
-            print(asset_url)
+        for tag in soup.find_all(["img", "link", "script"]):
+            if tag.name == "img" or tag.name == "script":
+                asset_url = tag.get("src")
+            else:
+                asset_url = tag.get("href")
 
             if asset_url:
                 asset_url = urljoin(flags.url, asset_url)
