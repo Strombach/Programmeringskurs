@@ -17,10 +17,8 @@ def main(flags):
 
         soup = BeautifulSoup(response.content, "html.parser")
 
-        with open("downloaded_page.html", "w", encoding="utf-8") as html_file:
-            html_file.write(soup.prettify())
-
-        os.makedirs("downloaded_assets")
+        asset_dir = "downloaded_assets"
+        os.makedirs(asset_dir)
 
         for tag in soup.find_all("img"):
             asset_url = tag.get("src")
@@ -38,8 +36,13 @@ def main(flags):
                     with open(f"downloaded_assets/{asset_name}", "wb") as asset_file:
                         asset_file.write(asset.content)
                     print(f"Downloaded asset: {asset_name}")
+
+                    tag["src"] = os.path.join(asset_dir, asset_name)
                 else:
                     print(f"Failed to find: {asset_url}")
+
+        with open("downloaded_page.html", "w", encoding="utf-8") as html_file:
+            html_file.write(soup.prettify())
     else:
         print(f"Can't reach {flags.url}.")
 
