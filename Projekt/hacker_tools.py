@@ -1,6 +1,6 @@
 import os
 import pyfiglet
-from toolbox import crypto_tool, domenus, webgetter
+from toolbox import crypto_tool, domenus, webgetter,smuggler
 
 def create_title(text):
     return pyfiglet.figlet_format(text)
@@ -31,6 +31,10 @@ while True:
             os.system("clear")
             print(create_title("WebGetter"))
             webgetter.webgetter()
+        case("4"):
+            os.system("clear")
+            print(create_title("Smuggler"))
+            smuggler.smuggler()
         case("0"):
             exit()
         case _:
