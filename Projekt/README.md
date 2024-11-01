@@ -101,6 +101,20 @@ Using requests and BeutifulSoup WebGetter copies a webpage and rewrites all ```<
 ```bash
 python webgetter.py -u https://webscraper.io/test-sites/e-commerce/allinone
 ```
+
+## Smuggler
+By using BeutifulSoup Smuggler adds javascript to a HTML file and makes it donwloadable.
+We could make it so that the downlaod popsup after "the target" has entered the page or pressed a button.
+
+### Usage:
+|Short Form|Long Form|Required|Description|
+|---|---|---|---|
+|-p|--payload|Yes|The payload to get hidden in the HTML.|
+|-hf|--htmlfile|Yes|The html to put the payload into.|
+|-dn|--downloadname|No|What the downloaded file is named  when downloaded. Default: setup.exe
+|-did|--downloadtagid|No|If the target should press any tag(s) to download the payload, enter the id of the tag(s). (Preferably a button or anchor tag)
+|-h|--help|No|List all arguments.|
+
 ### Assignment
 Bygg en toolbox bestående av flera Python-script som kan användas för penetrationstester eller inom IT-säkerhet.
 
