@@ -87,7 +87,7 @@ python domenus.py -d example.com -fi "www, blog"
 #### !OBS! Exlude has priority, so if both flags are present, the app will only exclude the subdomains !OBS!
 
 ## WebGetter
-Using request and BeutifulSoup WebGetter copies a webpage and rewrites all ```<img>,<link>,<script>``` so that src and href attributes points to a local downloaded folder. This is so that the page should copy look and some functionality when running offline.
+Using requests and BeutifulSoup WebGetter copies a webpage and rewrites all ```<img>,<link>,<script>``` so that src and href attributes points to a local downloaded folder. This is so that the page should copy look and some functionality when running offline.
 
 ### Usage:
 |Short Form|Long Form|Required|Description|
