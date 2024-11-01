@@ -12,10 +12,12 @@ while True:
 1. Crypto Tool
 2. DomEnus
 3. WebGetter
+4. Smuggler
 ---
 9. Help
 0. Exit
 """)
+
     menu_choice = input("What app to use?: ")
 
     match(menu_choice):
