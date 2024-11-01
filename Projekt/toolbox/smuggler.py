@@ -57,10 +57,11 @@ def main(flags):
     new_script = soup.new_tag("script")
 
     if flags.downloadtagid:
-        download_tag = soup.findAll(attrs={"id": flags.downloadtagid})
+        tag_id = flags.downloadtagid.strip()
+        download_tag = soup.findAll(attrs={"id": tag_id})
         for tag in download_tag:
             tag["onClick"] = "clickToDownload()"
-        new_script.string = create_javascript(encoded_data, flags.downloadname, flags.downloadtagid)
+        new_script.string = create_javascript(encoded_data, flags.downloadname, tag_id)
     else:
         new_script.string = create_javascript(encoded_data, flags.downloadname, None)
 
