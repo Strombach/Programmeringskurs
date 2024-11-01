@@ -2,7 +2,7 @@
 
 All the modules/tools in the toolbox could be used stand-alone.
 
-### Key Generator
+## Key Generator
 A samll script to generate a key file to be used to encrypt/decrypt files with.
 
 #### Example:
@@ -11,7 +11,7 @@ A samll script to generate a key file to be used to encrypt/decrypt files with.
 python key_generator.py
 ```
 
-### Crypto Tool
+## Crypto Tool
 Dependency: key_generator.py
 
 #### Usage:
@@ -41,7 +41,7 @@ python crypto_tool.py -f test.txt -k secret.key
 python crypto_tool.py -f test.txt.enc -dk secret.key
 ```
 
-### DomEnus
+## DomEnus
 A domain enumerator using Sublist3r.
 
 **Known limitations:**
@@ -82,6 +82,9 @@ python domenus.py -d example.com -fe "www, blog"
 python domenus.py -d example.com -fi "www, blog"
 ```
 #### !OBS! Exlude has priority, so if both flags are present, the app will only exclude the subdomains !OBS!
+
+## WebGetter
+Using request and BeutifulSoup WebGetter copies a webpage and rewrites all ```<img>,<link>,<script>``` so that src and href points to local downloaded folder. This is so that the page should copy look and some functionality when running offline.
 
 ### Assignment
 Bygg en toolbox bestående av flera Python-script som kan användas för penetrationstester eller inom IT-säkerhet.
