@@ -56,16 +56,12 @@ def main(flags):
     soup = BeautifulSoup(html_content, "html.parser")
     new_script = soup.new_tag("script")
 
-    if flags.button:
-        btn = soup.find(attrs={"id": flags.button})
+    if flags.downloadtag:
+        btn = soup.find(attrs={"id": flags.downloadtag})
         btn["onClick"] = "clickToDownload()"
-        new_script.string = create_javascript(encoded_data, flags.downloadname, flags.button)
+        new_script.string = create_javascript(encoded_data, flags.downloadname, flags.downloadtag)
     else:
         new_script.string = create_javascript(encoded_data, flags.downloadname, None)
-
-
-
-
 
     soup.body.append(new_script)
 
@@ -84,9 +80,12 @@ if __name__ == "__main__":
     parser.add_argument("-hf","--htmlfile", help="The html file to embed into.", required=True)
 
     # Optional
-    parser.add_argument("-dn","--downloadname", default="test.exe", help="The name of the file when downloaded")
-    parser.add_argument("-bid","--button", help="The id of the button to click to download file.")
+    parser.add_argument("-dn","--downloadname", default="setup.exe", help="The name of the file when downloaded")
+    parser.add_argument("-did","--downloadtag", help="The id of the button to click to download file.")
 
     argparse_args = parser.parse_args()
 
     main(argparse_args)
+else:
+    def smuggler():
+        print("Test")
