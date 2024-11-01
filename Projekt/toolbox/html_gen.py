@@ -1,5 +1,8 @@
 from bs4 import BeautifulSoup
 
+with open("app.js", "r") as js_file:
+    js_script = js_file.read()
+
 def main():
     with open("index.html", "r", encoding="utf-8") as original_file:
         html_content = original_file.read()
@@ -10,7 +13,7 @@ def main():
     print(f"Title of the page: {title}")
 
     new_script = soup.new_tag("script")
-    new_script.string = "console.log('Added a new script')"
+    new_script.string = js_script
     soup.body.append(new_script)
 
     with open("modified_index.html", "w", encoding="utf-8") as new_file:
