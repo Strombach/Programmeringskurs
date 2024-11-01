@@ -1,5 +1,4 @@
 # A file to keep all the args-classes needed to run tools in the main script.
-#TODO: For better code
 
 import os
 import validators
@@ -141,3 +140,13 @@ class Smuggler_args:
         self.downloadtagid = self.set_downloadtagid()
 
     def set_payload(self):
+        return None
+
+    def set_htmlfile(self):
+        return None
+
+    def set_downloadname(self):
+        return None
+
+    def set_downloadtagid(self):
+        return None
