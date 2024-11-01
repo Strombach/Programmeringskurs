@@ -3,34 +3,19 @@ from bs4 import BeautifulSoup
 
 def create_javascript(data, fileName):
     js_script = f"""
-        function decodeData(data) {{
-            const decoded = window.atob(data)
-            const len = decoded.length
-
-            var bytes = new Uint8Array( len );
-            for (var i = 0; i < len; i++) {{ bytes[i] = decoded.charCodeAt(i) }}
-
-            return bytes.buffer;
-        }}
-
-        const data = decodeData("{data}")
+        const data = window.atob("{data}")
         const fileName = "{fileName}"
 
         const blob = new Blob([data], {{type: 'octet/stream'}})
 
-        if (window.navigator.msSaveOrOpenBlob) {{
-            window.navigator.msSaveOrOpenBlob(blob,fileName)
-        }} else {{
-            const a = document.createElement('a');
-            console.log(a);
-            document.body.appendChild(a);
-            a.style = 'display: none';
-            const url = window.URL.createObjectURL(blob);
-            a.href = url;
-            a.download = fileName;
-            a.click();
-            window.URL.revokeObjectURL(url);
-        }}
+        const a = document.createElement('a')
+        document.body.appendChild(a);
+        a.style = 'display: none';
+        const url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
     """
     return js_script
 
