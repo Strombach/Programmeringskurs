@@ -56,10 +56,11 @@ def main(flags):
     soup = BeautifulSoup(html_content, "html.parser")
     new_script = soup.new_tag("script")
 
-    if flags.downloadtag:
-        btn = soup.find(attrs={"id": flags.downloadtag})
-        btn["onClick"] = "clickToDownload()"
-        new_script.string = create_javascript(encoded_data, flags.downloadname, flags.downloadtag)
+    if flags.downloadtagid:
+        download_tag = soup.findAll(attrs={"id": flags.downloadtagid})
+        for tag in download_tag:
+            tag["onClick"] = "clickToDownload()"
+        new_script.string = create_javascript(encoded_data, flags.downloadname, flags.downloadtagid)
     else:
         new_script.string = create_javascript(encoded_data, flags.downloadname, None)
 
@@ -81,7 +82,7 @@ if __name__ == "__main__":
 
     # Optional
     parser.add_argument("-dn","--downloadname", default="setup.exe", help="The name of the file when downloaded")
-    parser.add_argument("-did","--downloadtag", help="The id of the button to click to download file.")
+    parser.add_argument("-did","--downloadtagid", help="The id of the button to click to download file.")
 
     argparse_args = parser.parse_args()
 
