@@ -30,6 +30,11 @@ python toolbox/[nameoftool].py [OPTIONS]
 ```
 ### All tools are dependent on "toolbox/args.py" to be able to run from Hacker_Tool menu.
 
+## For futher development
+To add a tool to Hacker Tools, you need to follow convention with classes in args for all options the module has when running independantly.
+
+Then a function is declared with the same name as the module. This function is then called from the Hacker Tool main script.
+
 # Key Generator
 A small script to generate a key file to be used to encrypt/decrypt files with.
 
