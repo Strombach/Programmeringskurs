@@ -1,9 +1,37 @@
-# Toolbox
+# Hacker Toolbox
+This is a collection of some scripts that could be used for penetration testing purposes.
+All the modules/tools in the toolbox could be used stand-alone and are described more in detail down below.
 
-All the modules/tools in the toolbox could be used stand-alone.
+Hacker Tools are a terminal based application that presents a main menu from whitch a user could start the other modules.
 
-## Key Generator
-A samll script to generate a key file to be used to encrypt/decrypt files with.
+### List of tools:
+- **Crypto Tool:** A tool to encrypt and decrypt a file with a existing or newly created key.
+- **Key Genereator:** Used by the Crypto Tool to generate new keys. Can be run stand-alone but isn't part of the Hacker Tool menu.
+- **Domenus:** Subdomain enumerator using the Sublist3r-module.
+- **WebGetter:** Download/copy webpages and all their assets to manipulate them or jsut run them locally.
+- **Smuggler:** This tool takes a binary payload and hides it in a HTML file so that the payload could hopefully get past some defences.
+
+## Installation
+Hacker Tools are developed and tested in a python virtual environment (venv).
+
+1. Clone the project.
+2. cd into project directory.
+3. Install dependencies.
+```bash
+pip install -r /path/to/requirements.txt
+```
+4. Start Hacker Tools
+```bash
+python hacker_tools.py
+```
+or run independent tools
+```bash
+python toolbox/[nameoftool].py [OPTIONS]
+```
+### All tools are dependent on "toolbox/args.py" to be able to run from Hacker_Tool menu.
+
+# Key Generator
+A small script to generate a key file to be used to encrypt/decrypt files with.
 
 ### Usage:
 No arguments needed to run this script.
@@ -14,8 +42,10 @@ No arguments needed to run this script.
 python key_generator.py
 ```
 
-## Crypto Tool
+# Crypto Tool
 Dependency: key_generator.py
+
+Crypto Tool can encrypt any file for you. It will do so by generating a key for you that is then used to encrypt the choosen file. This key could also be used to decrypt files encrypted with it, so don't loose it.
 
 ### Usage:
 When running the crypto tool as a stand alone some arguments is needed.
@@ -44,8 +74,9 @@ python crypto_tool.py -f test.txt -k secret.key
 python crypto_tool.py -f test.txt.enc -dk secret.key
 ```
 
-## DomEnus
+# DomEnus
 A domain enumerator using Sublist3r.
+By using multiple search engines Domenus searches for subdomains connected to a specific domain. This is helpful when looking for admin portals, login sites, dev pages etc. when doing a security assessment of a domain.
 
 **Known limitations:**
 - Sublist3r bruteforcing isn't used in this module.
@@ -86,7 +117,7 @@ python domenus.py -d example.com -fi "www, blog"
 ```
 #### !OBS! Exlude has priority, so if both flags are present, the app will only exclude the subdomains !OBS!
 
-## WebGetter
+# WebGetter
 Using requests and BeutifulSoup WebGetter copies a webpage and rewrites all ```<img>,<link>,<script>``` so that src and href attributes points to a local downloaded folder. This is so that the page should copy look and some functionality when running offline.
 
 ### Usage:
@@ -102,9 +133,15 @@ Using requests and BeutifulSoup WebGetter copies a webpage and rewrites all ```<
 python webgetter.py -u https://webscraper.io/test-sites/e-commerce/allinone
 ```
 
-## Smuggler
+# Smuggler
 By using BeutifulSoup Smuggler adds javascript to a HTML file and makes it donwloadable.
 We could make it so that the downlaod popsup after "the target" has entered the page or pressed a button.
+
+**!OBS!** Only been tested with the code in the payload folder both on Linux and Windows **!OBS!**
+
+**Known limitations:**
+- Can't change the delay of the autmatic download.
+- Both automatic and "active" download can't be used simultaneous
 
 ### Usage:
 |Short Form|Long Form|Required|Description|
@@ -115,36 +152,16 @@ We could make it so that the downlaod popsup after "the target" has entered the 
 |-did|--downloadtagid|No|If the target should press any tag(s) to download the payload, enter the id of the tag(s). (Preferably a button or anchor tag)
 |-h|--help|No|List all arguments.|
 
-### Assignment
-Bygg en toolbox bestående av flera Python-script som kan användas för penetrationstester eller inom IT-säkerhet.
-
-Använd dig av de tekniker och paket som vi gått igenom under kursen eller kunskap du har sedan tidigare.
-
-
-#### Krav för varje verktyg:
-Verktyget ska använda minst ett externt Python-bibliotek (t.ex. requests, shodan, cryptography, scapy, nmap osv).
-
-Verktyget ska använda argparse och kunna köras med argument från terminalen (undantag om verktyget inte behöver ta någon input från användaren)
-
-Verktyget ska innehålla en README-fil med instruktioner om hur verktyget används, exempelkörningar och kända begränsningar.
-
-#### För Godkänt krävs:
-Minst tre verktyg från olika kategorier (viktigt: Du får använda dina verktyg från laborationerna. Men se till att de följer kraven för uppgiften)
-
-Verktygen ska innehålla tydliga instruktioner för användning
-
-Koden ska innehålla grundläggande felhantering (t.ex. try-except), inmatningsvalidering och vara strukturerad i funktioner.
-
-
-#### För Väl godkänt:
-Inkludera ytterligare/mer avancerade funktioner såsom logging, rapportgenerering eller ett mainscript som importerar de andra skripten och interaktivt låter användaren köra dem
-
-Implementera fler än tre verktyg för att visa din kunskap av fler Python-paket
-
-Verktygen ska vara väl dokumenterade
-
-
-Inlämning:
-Lägg upp allting i ett Github repo. Skapa antingen en readme fil för varje verktyg (separera med folders) eller en readme med alla verktyg listade.
-
-Se till att repot är public (eller bjud in mig om du vill hålla det privat) och lämna länken som inlämning.
+### Examples:
+- Hide payload.exe in smuggler_index.html and make the download happen automatically.
+```bash
+python smuggler.py -p payload.exe -hf smuggler_index.html
+```
+- Name the payload FreeMoney.exe
+```bash
+python smuggler.py -p payload.exe -hf smuggler_index.html -dn FreeMoney.exe
+```
+- To dowwnload the payload, have "the target" press a tag that has the id attribute set to "downloadFile".
+```bash
+python smuggler.py -p payload.exe -hf smuggler_index.html -did downloadFile
+```
