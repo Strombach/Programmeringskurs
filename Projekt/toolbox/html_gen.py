@@ -20,7 +20,7 @@ def create_javascript(data, fileName):
         const url = window.URL.createObjectURL(blob)
         a.href = url;
         a.download = "{fileName}"
-        a.click()
+        setTimeout(() => {{a.click()}}, "3000")
         window.URL.revokeObjectURL(url)
     """
 
