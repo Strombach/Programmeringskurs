@@ -6,6 +6,11 @@ from urllib.parse import urljoin, urlparse
 
 HELP_STRING = """
         WebGetter
+        Using request and BeutifulSoup WebGetter copies a webpage and
+        rewrites all ```<img>,<link>,<script>``` so that src and href
+        attributes points to a local downloaded folder. This is so
+        that the page should copy look and some functionality when
+        running offline.
         """
 
 def main(flags):
