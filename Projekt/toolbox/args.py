@@ -116,6 +116,7 @@ class Domenus_Args:
 class Webgetter_args:
     def __init__(self):
         self.url = self.set_url()
+        self.name = self.set_name()
 
     def set_url(self):
         while True:
@@ -126,3 +127,8 @@ class Webgetter_args:
                 continue
             else:
                 return url
+
+    def set_name(self):
+        while True:
+            name = input("Set name for file/folder, leave empty for \"downloaded\": ").strip()
+            return name

@@ -17,11 +17,9 @@ def main(flags):
 
     if flags.name:
         download_name = flags.name
-        print(flags.name)
     else:
         download_name = "downloaded"
 
-    print(download_name)
     response = requests.get(flags.url)
 
     if response.status_code == 200:
@@ -30,7 +28,7 @@ def main(flags):
         soup = BeautifulSoup(response.content, "html.parser")
 
         asset_dir = f"{download_name}_assets"
-        os.makedirs(asset_dir)
+        os.makedirs(asset_dir, exist_ok=True)
 
         for tag in soup.find_all(["img", "link", "script"]):
             if tag.name == "img" or tag.name == "script":
