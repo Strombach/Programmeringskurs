@@ -5,6 +5,9 @@ All the modules/tools in the toolbox could be used stand-alone.
 ## Key Generator
 A samll script to generate a key file to be used to encrypt/decrypt files with.
 
+### Usage:
+No arguments needed to run this script.
+
 #### Example:
 - To create a new key:
 ```bash
@@ -14,7 +17,7 @@ python key_generator.py
 ## Crypto Tool
 Dependency: key_generator.py
 
-#### Usage:
+### Usage:
 When running the crypto tool as a stand alone some arguments is needed.
 Default arguments are optional to add.
 
@@ -27,7 +30,7 @@ Default arguments are optional to add.
 |-dk|--decryptkey|No|The key file used to decrypt an encrypted file with.|
 |-h|--help|No| List all arguments.|
 
-#### Example:
+#### Examples:
 - To encrypt a file with a new key:
 ```bash
 python crypto_tool.py -f test.txt
@@ -48,7 +51,7 @@ A domain enumerator using Sublist3r.
 - Sublist3r bruteforcing isn't used in this module.
 - All engines in Sublist3r are used and can't be disabled.
 
-#### Arguments
+### Usage:
 |Short Form|Long Form|Required|Description|
 |---|---|---|---|
 |-d|--domain|Yes|The domain to enumerate.|
@@ -60,7 +63,7 @@ A domain enumerator using Sublist3r.
 |-v|--verbose|No|Set to turn on verbose mode.|
 |-h|--help|No|List all arguments.|
 
-#### Example:
+#### Examples:
 - Enumerate example.com with 20 threads:
 ```bash
 python domenus.py -d example.com -t 20
@@ -84,8 +87,20 @@ python domenus.py -d example.com -fi "www, blog"
 #### !OBS! Exlude has priority, so if both flags are present, the app will only exclude the subdomains !OBS!
 
 ## WebGetter
-Using request and BeutifulSoup WebGetter copies a webpage and rewrites all ```<img>,<link>,<script>``` so that src and href points to local downloaded folder. This is so that the page should copy look and some functionality when running offline.
+Using request and BeutifulSoup WebGetter copies a webpage and rewrites all ```<img>,<link>,<script>``` so that src and href attributes points to a local downloaded folder. This is so that the page should copy look and some functionality when running offline.
 
+### Usage:
+|Short Form|Long Form|Required|Description|
+|---|---|---|---|
+|-u|--url|Yes|The URL pointing to the webpage to download|
+|-n|--name|No|Name the page and asset folder|
+|-h|--help|No|List all arguments.|
+
+### Examples:
+- To download/copy a webpage.
+```bash
+python webgetter.py -u https://webscraper.io/test-sites/e-commerce/allinone
+```
 ### Assignment
 Bygg en toolbox bestående av flera Python-script som kan användas för penetrationstester eller inom IT-säkerhet.
 

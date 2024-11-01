@@ -10,6 +10,13 @@ HELP_STRING = """
 
 def main(flags):
 
+    if flags.name:
+        download_name = flags.name
+        print(flags.name)
+    else:
+        download_name = "downloaded"
+
+    print(download_name)
     response = requests.get(flags.url)
 
     if response.status_code == 200:
@@ -17,7 +24,7 @@ def main(flags):
 
         soup = BeautifulSoup(response.content, "html.parser")
 
-        asset_dir = "downloaded_assets"
+        asset_dir = f"{download_name}_assets"
         os.makedirs(asset_dir)
 
         for tag in soup.find_all(["img", "link", "script"]):
@@ -34,7 +41,7 @@ def main(flags):
 
                 asset = requests.get(asset_url)
                 if asset.status_code == 200:
-                    with open(f"downloaded_assets/{asset_name}", "wb") as asset_file:
+                    with open(f"{download_name}_assets/{asset_name}", "wb") as asset_file:
                         asset_file.write(asset.content)
                     print(f"Downloaded asset: {asset_name}")
 
@@ -42,7 +49,7 @@ def main(flags):
                 else:
                     print(f"Failed to find: {asset_url}")
 
-        with open("downloaded_page.html", "w", encoding="utf-8") as html_file:
+        with open(f"{download_name}_index.html", "w", encoding="utf-8") as html_file:
             html_file.write(soup.prettify())
     else:
         print(f"Can't reach {flags.url}.")
@@ -57,6 +64,9 @@ if __name__ == "__main__":
 
     # Mandatory
     parser.add_argument("-u","--url", help="The URL to the webpage to download.")
+
+    # Optional
+    parser.add_argument("-n","--name", help="Name for the downloaded file")
 
     args = parser.parse_args()
 
