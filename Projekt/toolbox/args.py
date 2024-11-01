@@ -132,3 +132,12 @@ class Webgetter_args:
         while True:
             name = input("Set name for file/folder, leave empty for \"downloaded\": ").strip()
             return name
+
+class Smuggler_args:
+    def __init__(self):
+        self.payload = self.set_payload()
+        self.htmlfile = self.set_htmlfile()
+        self.downloadname = self.set_downloadname()
+        self.downloadtagid = self.set_downloadtagid()
+
+    def set_payload(self):
