@@ -1,5 +1,11 @@
 import base64
+import argparse
 from bs4 import BeautifulSoup
+
+HELP_STRING = """
+        Smuggler
+        Smuggle payloads in HTML files.
+        """
 
 def create_javascript(data, fileName):
     js_script = f"""
@@ -38,4 +44,16 @@ def main(flags):
         new_file.write(str(soup.prettify()))
 
 if __name__ == "__main__":
-    main("test")
+    parser = argparse.ArgumentParser(
+        prog="Smuggler",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description= HELP_STRING
+    )
+
+    # Mandatory
+    parser.add_argument("-p","--payload", help="The payload to embed in the html", required=True)
+    parser.add_argument("-hf","--htmlfile", help="The html file to embed into", required=True)
+
+    argparse_args = parser.parse_args()
+
+    main(argparse_args)
