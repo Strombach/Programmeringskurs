@@ -35,6 +35,10 @@ To add a tool to Hacker Tools, you need to follow convention with classes in arg
 
 Then a function is declared with the same name as the module. This function is then called from the Hacker Tool main script.
 
+First thing to improve for code quality, use args for when running scripts stand alone too. The solution in place was implemented after the first scripts was created with argparse in mind.
+
+Args are used for some validation of the input from the user and should be in place when running stand alone as well.
+
 # Key Generator
 A small script to generate a key file to be used to encrypt/decrypt files with.
 
@@ -142,11 +146,14 @@ python webgetter.py -u https://webscraper.io/test-sites/e-commerce/allinone
 By using BeutifulSoup Smuggler adds javascript to a HTML file and makes it donwloadable.
 We could make it so that the downlaod popsup after "the target" has entered the page or pressed a button.
 
+When a modified HTML is create it can be tested by serving it via a webserver, like Live server plugin in vscode.
+
 **!OBS!** Only been tested with the code in the payload folder both on Linux and Windows **!OBS!**
 
 **Known limitations:**
 - Can't change the delay of the autmatic download.
 - Both automatic and "active" download can't be used simultaneous
+- Can only activate download with tags that has the id attribute. So an id in the html needs to exist and be found (if donwloaded with WebGetter) or an id needs to be set manually before running the smuggler.
 
 ### Usage:
 |Short Form|Long Form|Required|Description|
@@ -156,6 +163,7 @@ We could make it so that the downlaod popsup after "the target" has entered the 
 |-dn|--downloadname|No|What the downloaded file is named  when downloaded. Default: setup.exe
 |-did|--downloadtagid|No|If the target should press any tag(s) to download the payload, enter the id of the tag(s). (Preferably a button or anchor tag)
 |-h|--help|No|List all arguments.|
+
 
 ### Examples:
 - Hide payload.exe in smuggler_index.html and make the download happen automatically.
