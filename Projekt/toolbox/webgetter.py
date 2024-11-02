@@ -78,6 +78,6 @@ else:
     from .args import Webgetter_Args
 
     def webgetter():
-        args = Webgetter_args()
+        args = Webgetter_Args()
 
         main(args)

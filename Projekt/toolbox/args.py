@@ -168,7 +168,7 @@ class Smuggler_Args:
 
     def set_downloadtagid(self):
         while True:
-            download_tag_id = input("Select a id of a tag to activate download (Leave empty for automatic donwload): ")
+            download_tag_id = input("Select a id of a tag to activate download (Leave empty for automatic download): ")
 
             if download_tag_id == "":
                 return None
