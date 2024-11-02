@@ -158,7 +158,19 @@ class Smuggler_Args:
                 print("HTML file can't be reached")
 
     def set_downloadname(self):
-        return None
+        while True:
+            download_name = input("Name the download (Default: setup.exe): ").strip()
+
+            if download_name == "":
+                return "setup.exe"
+            else:
+                return download_name
 
     def set_downloadtagid(self):
-        return None
+        while True:
+            download_tag_id = input("Select a id of a tag to activate download (Leave empty for automatic donwload): ")
+
+            if download_tag_id == "":
+                return None
+            else:
+                return download_tag_id
