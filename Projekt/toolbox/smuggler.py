@@ -70,6 +70,8 @@ def main(flags):
     with open("modified_index.html", "w", encoding="utf-8") as new_file:
         new_file.write(str(soup.prettify()))
 
+    input()
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog="Smuggler",
@@ -89,5 +91,8 @@ if __name__ == "__main__":
 
     main(argparse_args)
 else:
+    from .args import Smuggler_Args
     def smuggler():
-        print("Test")
+        args = Smuggler_Args()
+
+        main(args)

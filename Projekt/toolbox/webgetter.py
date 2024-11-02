@@ -63,7 +63,7 @@ if __name__ == "__main__":
         prog="Wgetter",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description= HELP_STRING
-)
+    )
 
     # Mandatory
     parser.add_argument("-u","--url", help="The URL to the webpage to download.")
@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
     main(args)
 else:
-    from .args import Webgetter_args
+    from .args import Webgetter_Args
 
     def webgetter():
         args = Webgetter_args()
