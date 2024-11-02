@@ -112,7 +112,7 @@ class Domenus_Args:
                 else:
                     return include_words
 
-class Webgetter_args:
+class Webgetter_Args:
     def __init__(self):
         self.url = self.set_url()
         self.name = self.set_name()
@@ -132,7 +132,7 @@ class Webgetter_args:
             name = input("Set name for file/folder, leave empty for \"downloaded\": ").strip()
             return name
 
-class Smuggler_args:
+class Smuggler_Args:
     def __init__(self):
         self.payload = self.set_payload()
         self.htmlfile = self.set_htmlfile()
@@ -140,10 +140,22 @@ class Smuggler_args:
         self.downloadtagid = self.set_downloadtagid()
 
     def set_payload(self):
-        return None
+        while True:
+            payload_path = input("Enter payload: ")
+
+            if os.path.isfile(payload_path):
+                return payload_path
+            else:
+                print("Payload file can't be reached")
 
     def set_htmlfile(self):
-        return None
+        while True:
+            html_path = input("Enter HTML file: ")
+
+            if os.path.isfile(html_path):
+                return html_path
+            else:
+                print("HTML file can't be reached")
 
     def set_downloadname(self):
         return None
