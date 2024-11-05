@@ -148,7 +148,7 @@ We could make it so that the downlaod popsup after "the target" has entered the 
 
 When a modified HTML is create it can be tested by serving it via a webserver, like Live server plugin in vscode.
 
-**!OBS!** Only been tested with the code in the payload folder both on Linux and Windows **!OBS!**
+**!OBS!** Only been tested with the code in the payload folder both on Linux and Windows (Compiled with gcc for Linux or x86_64-w64-mingw32-gcc for Windows)**!OBS!**
 
 **Known limitations:**
 - Can't change the delay of the autmatic download.
